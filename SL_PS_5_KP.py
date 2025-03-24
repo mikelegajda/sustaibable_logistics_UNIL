@@ -1,4 +1,4 @@
-from ortools.algorithms import pywrapknapsack_solver
+from ortools.algorithms.python import knapsack_solver
 
 
 def main():
@@ -16,28 +16,29 @@ def main():
     ]]
     capacities = [850]
 
-        # Create the solver.
-    solver = pywrapknapsack_solver.KnapsackSolver(
-        pywrapknapsack_solver.KnapsackSolver.
-        KNAPSACK_DYNAMIC_PROGRAMMING_SOLVER, 'KnapsackExample')
+    # Create the solver.
+    solver = knapsack_solver.KnapsackSolver(
+        knapsack_solver.SolverType.KNAPSACK_64ITEMS_SOLVER,
+        "KnapsackExample")
 
 
-    solver.Init(values, weights, capacities)
-    computed_value = solver.Solve()
+    solver.init(values, weights, capacities)
+    computed_value = solver.solve()
+
+
 
     packed_items = []
     packed_weights = []
     total_weight = 0
-    print('Total value =', computed_value)
+    print("Total value =", computed_value)
     for i in range(len(values)):
-        if solver.BestSolutionContains(i):
+        if solver.best_solution_contains(i):
             packed_items.append(i)
             packed_weights.append(weights[0][i])
             total_weight += weights[0][i]
-    print('Total weight:', total_weight)
-    print('Packed items:', packed_items)
-    print('Packed_weights:', packed_weights)
-
+    print("Total weight:", total_weight)
+    print("Packed items:", packed_items)
+    print("Packed_weights:", packed_weights)
 
 if __name__ == '__main__':
     main()
